@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  nginx-container:
+    container_name: webserver-nginx
+    image: nginx:alpine
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html/
+      - "./docker/nginx/log/:/var/log/nginx/"
+      - "./docker/nginx/conf/app.conf:/etc/nginx/conf.d/app.conf"
+    networks:
+      - app-network
+
+  php-container:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: app
+    volumes:
+      - "./:/var/www/html/"
+    networks:
+      - app-network
+
+  mysql-container:
+    image: mysql:8
+    container_name: db-mysql
+    ports:
+      - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'database'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'rootpassword'
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
