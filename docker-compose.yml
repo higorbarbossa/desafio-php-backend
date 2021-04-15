@@ -10,7 +10,7 @@ services:
       - "8080:80"
       - "443:443"
     volumes:
-      - ./:/var/www/html/
+      - ./:/var/www/desafio-backend-php/
       - "./docker/nginx/log/:/var/log/nginx/"
       - "./docker/nginx/conf/app.conf:/etc/nginx/conf.d/app.conf"
     networks:
@@ -22,7 +22,8 @@ services:
       dockerfile: ./docker/php/Dockerfile
     container_name: app
     volumes:
-      - "./:/var/www/html/"
+      - "./:/var/www/desafio-backend-php/"
+    working_dir: /var/www/desafio-backend-php/
     networks:
       - app-network
 

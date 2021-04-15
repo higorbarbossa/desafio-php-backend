@@ -1,60 +1,40 @@
 # Desafio Back-end PHP
 
-Abaixo você encontrará todos as informações necessárias para iniciar o seu teste.
+Repositório referente a um desafio backend php
 
-## Avisos antes de começar
+Para usar o ambiente docker
+```
+docker-compose up
+```
 
-- Crie um repositório no seu GitHub **sem citar nada relacionado a empresa**.
-- Faça seus commits no seu repositório.
-- Envie o link do seu repositório para o email **talentos_php@######.com**.
-- Você poderá consultar o Google, Stackoverflow ou algum projeto particular na sua máquina.
-- Dê uma olhada nos [Materiais úteis](#materiais-úteis).
-- Dê uma olhada em como será a [entrevista](#para-o-dia-da-entrevista-técnica).
-- Fique à vontade para perguntar qualquer dúvida aos recrutadores.
-- Fique tranquilo, respire, assim como você, também já passamos por essa etapa. Boa sorte! :)
+Prepare o arquivo com variáveis de ambiente
+```
+cp .env.example .env
+```
 
-*Corpo do Email com o link do repositório do desafio*
+Gere uma nova chave para a aplicação laravel
+```
+php artisan key:generate
+```
 
->Seu Nome
->
->Nome do recrutador
->
->Link do repositório
->
->Link do Linkedin
+Rode as migrations para criar o banco de dados
+```
+php artisan migrate
+```
 
-## Setup do projeto
+Rode a seeder para criar alguns usuários na base
+```
+php artisan db:seed
+```
 
-- Framework: Fique a vontade pra usar o framework que quiser
-- Subir local ou Docker * (valorizamos uma boa estrutura de docker feita por você)
+Para executar os testes de controllers
+```
+php artisan artisan test
+```
 
-## Para o dia da entrevista técnica
-Na data marcada pelo recrutador tenha sua aplicação rodando na sua máquina local para execução dos testes e para nos mostrar os pontos desenvolvidos e possíveis questionamentos.
-Faremos um code review junto contigo como se você já fosse do nosso time :heart:, você poderá explicar o que você pensou, como arquitetou e como pode evoluir o projeto.
+## Para testar a aplicação
 
-## Objetivo - APP Simplificado
-
-Temos 2 tipos de usuários, os comuns e lojistas, ambos têm carteira com dinheiro e realizam transferências entre eles. Vamos nos atentar **somente** ao fluxo de transferência entre dois usuários.
-
-Requisitos:
-
-- Para ambos tipos de usuário, precisamos do Nome Completo, CPF, e-mail e Senha. CPF/CNPJ e e-mails devem ser únicos no sistema. Sendo assim, seu sistema deve permitir apenas um cadastro com o mesmo CPF ou endereço de e-mail.
-
-- Usuários podem enviar dinheiro (efetuar transferência) para lojistas e entre usuários. 
-
-- Lojistas **só recebem** transferências, não enviam dinheiro para ninguém.
-
-- Antes de finalizar a transferência, deve-se consultar um serviço autorizador externo, use este mock para simular (https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6).
-
-- A operação de transferência deve ser uma transação (ou seja, revertida em qualquer caso de inconsistência) e o dinheiro deve voltar para a carteira do usuário que envia. 
-
-- No recebimento de pagamento, o usuário ou lojista precisa receber notificação enviada por um serviço de terceiro e eventualmente este serviço pode estar indisponível/instável. Use este mock para simular o envio (https://run.mocky.io/v3/b19f7b9f-9cbf-4fc6-ad22-dc30601aec04). 
-
-- Este serviço deve ser RESTFul.
-
-### Payload
-
-Você pode trazer uma **proposta** de payload, mas trazemos um exemplo aqui:
+### Exemplo:
 
 POST /transaction
 
@@ -62,63 +42,6 @@ POST /transaction
 {
     "value" : 100.00,
     "payer" : 4,
-    "payee" : 15
+    "payee" : 10
 }
 ```
-
-
-# Avaliação
-
-Apresente sua solução utilizando o framework que você desejar, justificando a escolha.
-Atente-se a cumprir a maioria dos requisitos, pois você pode cumprir-los parcialmente e durante a avaliação vamos bater um papo a respeito do que faltou.
-
-Teremos 2 partes da avaliação:
-
-A correção objetiva será realizada através da utilização de um script de correção automatizada.
-```
-docker run -it --rm -v $(pwd):/project -w /project jakzal/phpqa phpmd app text cleancode,codesize,controversial,design,naming,unusedcode
-```    
-
-A correção qualitativa será durante a entrevista e levará em conta os seguintes critérios:
-
-## O que será avaliado e valorizamos :heart:
-- Documentação 
-- ~~Se for para vaga sênior, foque bastante no **desenho de arquitetura**~~
-- Código limpo e organizado (nomenclatura, etc) 
-- Conhecimento de padrões (PSRs, design patterns, SOLID)
-- Ser consistente e saber argumentar suas escolhas
-- Apresentar soluções que domina
-- Modelagem de Dados []
-- Manutenibilidade do Código
-- Tratamento de erros
-- Cuidado com itens de segurança
-- Arquitetura (estruturar o pensamento antes de escrever)
-- Carinho em desacoplar componentes (outras camadas, service, repository)
-
-De acordo com os critérios acima, iremos avaliar seu teste para avançarmos para a entrevista técnica.
-Caso não tenha atingido aceitavelmente o que estamos propondo acima, não iremos prosseguir com o processo.
-
-## O que NÃO será avaliado :warning:
-- Fluxo de cadastro de usuários e lojistas
-- Frontend (só avaliaremos a (API Restful)[https://www.devmedia.com.br/rest-tutorial/28912])
-- Autenticação
-
-## O que será um diferencial
-- Uso de Docker [x]
-- Testes de [integração](https://www.atlassian.com/continuous-delivery/software-testing/types-of-software-testing) []
-- Testes [unitários](https://www.atlassian.com/continuous-delivery/software-testing/types-of-software-testing) []
-- Uso de Design Patterns []
-- Documentação []
-- Proposta de melhoria na arquitetura []
-
-
-## Materiais úteis
-- https://hub.packtpub.com/why-we-need-design-patterns/
-- https://refactoring.guru/
-- http://br.phptherightway.com/
-- https://www.php-fig.org/psr/psr-12/
-- https://www.atlassian.com/continuous-delivery/software-testing/types-of-software-testing
-- https://github.com/exakat/php-static-analysis-tools
-- https://martinfowler.com/articles/microservices.htm
-- https://docs.guzzlephp.org/en/stable/request-options.html
-- https://www.devmedia.com.br/rest-tutorial/28912

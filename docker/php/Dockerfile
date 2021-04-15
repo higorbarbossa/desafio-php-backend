@@ -1,7 +1,5 @@
 FROM php:7.4-fpm
 
-WORKDIR /var/www/html/
-
 RUN apt-get update && apt-get install -y \
     build-essential \
     # libpng-dev \
@@ -29,6 +27,6 @@ RUN docker-php-source delete
 RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
 	mv composer.phar /usr/local/bin/composer
 
-RUN chmod 0777 -Rf /var/www/html/
+RUN chmod 0777 -Rf /var/www/
 
 EXPOSE 9000
