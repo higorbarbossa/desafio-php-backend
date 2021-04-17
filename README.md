@@ -34,6 +34,12 @@ php artisan artisan test
 
 ## Para testar a aplicação
 
+Se usar o ambiente docker para rodar a aplicação, a base url será:
+```
+desafio-backend-php.localhost:8080
+```
+
+
 ### Exemplo:
 
 POST /transaction
