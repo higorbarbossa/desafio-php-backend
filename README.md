@@ -29,7 +29,7 @@ php artisan db:seed
 
 Para executar os testes de controllers
 ```
-php artisan artisan test
+php artisan test
 ```
 
 ## Para testar a aplicação
