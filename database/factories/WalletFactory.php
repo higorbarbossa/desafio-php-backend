@@ -22,7 +22,7 @@ class WalletFactory extends Factory
     public function definition()
     {
         return [
-            'account_balance' => 0
+            'account_balance' => 1000
         ];
     }
 }
